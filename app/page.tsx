@@ -1,4 +1,4 @@
-import GameOfLife from "@/components/GameOfLife";
+import GameOfLife from '@/components/GameOfLife';
 
 export default function Home() {
   return (
@@ -7,3 +7,5 @@ export default function Home() {
     </main>
   );
 }
+
+// TODO: add proper error handling

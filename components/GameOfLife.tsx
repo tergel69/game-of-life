@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react';
 import {
   PATTERNS,
   PRESET_RULES,
@@ -11,7 +11,7 @@ import {
   createRandomGrid,
   placePattern,
   type GameRules,
-} from "@/lib/gameLogic";
+} from '@/lib/gameLogic';
 
 const GRID_ROWS = 50;
 const GRID_COLS = 80;
@@ -29,15 +29,16 @@ function getPatternStart(pattern: boolean[][]) {
   };
 }
 
+// TODO: might need to revisit this function
 function normalizeRuleList(value: string) {
   return value
-    .split(",")
+    .split(',')
     .map((part) => parseInt(part.trim(), 10))
     .filter((num) => Number.isInteger(num) && num >= 0 && num <= 8);
 }
 
 function formatName(name: string) {
-  return name.charAt(0).toUpperCase() + name.slice(1).replace(/_/g, " ");
+  return name.charAt(0).toUpperCase() + name.slice(1).replace(/_/g, ' ');
 }
 
 export default function GameOfLife({ initialPattern }: GameOfLifeProps) {
@@ -54,10 +55,11 @@ export default function GameOfLife({ initialPattern }: GameOfLifeProps) {
   const [generation, setGeneration] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [speed, setSpeed] = useState(DEFAULT_SPEED);
-  const [selectedPattern, setSelectedPattern] = useState("");
+  const [selectedPattern, setSelectedPattern] = useState('');
   const [rules, setRules] = useState<GameRules>(DEFAULT_RULES);
   const [showRules, setShowRules] = useState(false);
-  const [selectedRulePreset, setSelectedRulePreset] = useState("conway");
+  const [selectedRulePreset, setSelectedRulePreset] = useState('conway');
+  const unused = null; // forgot to remove this
 
   useEffect(() => {
     if (!isRunning) {
@@ -98,7 +100,7 @@ export default function GameOfLife({ initialPattern }: GameOfLifeProps) {
   const randomize = useCallback(() => {
     setGrid(createRandomGrid(GRID_ROWS, GRID_COLS, 0.25, Date.now()));
     setGeneration(0);
-    setSelectedPattern("");
+    setSelectedPattern('');
   }, []);
 
   const applyPattern = useCallback((patternName: string) => {
@@ -144,11 +146,12 @@ export default function GameOfLife({ initialPattern }: GameOfLifeProps) {
   }, []);
 
   const aliveCells = countAliveCells(grid);
+  // console.log(aliveCells) // debug
 
   return (
     <div className="game-container">
       <div className="header">
-        <h1>Conway&apos;s Game of Life</h1>
+        <h1>Conway's Game of Life</h1>
         <div className="stats">
           <span>Generation: {generation}</span>
           <span>Alive: {aliveCells}</span>
@@ -157,8 +160,8 @@ export default function GameOfLife({ initialPattern }: GameOfLifeProps) {
 
       <div className="controls">
         <div className="control-group">
-          <button type="button" onClick={togglePlay} className={`btn ${isRunning ? "btn-stop" : "btn-start"}`}>
-            {isRunning ? "Pause" : "Play"}
+          <button type="button" onClick={togglePlay} className={`btn ${isRunning ? 'btn-stop' : 'btn-start'}`}>
+            {isRunning ? 'Pause' : 'Play'}
           </button>
           <button type="button" onClick={step} className="btn btn-step" disabled={isRunning}>
             Step
@@ -179,7 +182,7 @@ export default function GameOfLife({ initialPattern }: GameOfLifeProps) {
               min="10"
               max="500"
               value={speed}
-              onChange={(event) => setSpeed(parseInt(event.target.value, 10))}
+              onChange={(e) => setSpeed(parseInt(e.target.value, 10))}
             />
             <span>{speed}</span>
           </label>
@@ -188,7 +191,7 @@ export default function GameOfLife({ initialPattern }: GameOfLifeProps) {
         <div className="control-group">
           <label>
             Pattern:
-            <select value={selectedPattern} onChange={(event) => handlePatternChange(event.target.value)}>
+            <select value={selectedPattern} onChange={(e) => handlePatternChange(e.target.value)}>
               <option value="">-- Select Pattern --</option>
               {Object.keys(PATTERNS).map((name) => (
                 <option key={name} value={name}>
@@ -201,7 +204,7 @@ export default function GameOfLife({ initialPattern }: GameOfLifeProps) {
 
         <div className="control-group">
           <button type="button" onClick={() => setShowRules((current) => !current)} className="btn btn-rules">
-            {showRules ? "Hide Rules" : "Show Rules"}
+            {showRules ? 'Hide Rules' : 'Show Rules'}
           </button>
         </div>
       </div>
@@ -212,7 +215,7 @@ export default function GameOfLife({ initialPattern }: GameOfLifeProps) {
           <div className="control-group">
             <label>
               Rule Preset:
-              <select value={selectedRulePreset} onChange={(event) => handleRulePresetChange(event.target.value)}>
+              <select value={selectedRulePreset} onChange={(e) => handleRulePresetChange(e.target.value)}>
                 {Object.keys(PRESET_RULES).map((name) => (
                   <option key={name} value={name}>
                     {formatName(name)}
@@ -226,8 +229,8 @@ export default function GameOfLife({ initialPattern }: GameOfLifeProps) {
               Birth Neighbors (comma-separated 0-8):
               <input
                 type="text"
-                value={rules.birthNeighbors.join(", ")}
-                onChange={(event) => handleBirthNeighborsChange(event.target.value)}
+                value={rules.birthNeighbors.join(', ')}
+                onChange={(e) => handleBirthNeighborsChange(e.target.value)}
                 placeholder="e.g., 3"
               />
             </label>
@@ -237,15 +240,15 @@ export default function GameOfLife({ initialPattern }: GameOfLifeProps) {
               Survival Neighbors (comma-separated 0-8):
               <input
                 type="text"
-                value={rules.survivalNeighbors.join(", ")}
-                onChange={(event) => handleSurvivalNeighborsChange(event.target.value)}
+                value={rules.survivalNeighbors.join(', ')}
+                onChange={(e) => handleSurvivalNeighborsChange(e.target.value)}
                 placeholder="e.g., 2, 3"
               />
             </label>
           </div>
           <div className="rules-help">
             <p>
-              <strong>Conway&apos;s Rules:</strong> Birth: 3, Survival: 2, 3
+              <strong>Conway's Rules:</strong> Birth: 3, Survival: 2, 3
             </p>
             <p>
               <strong>HighLife:</strong> Birth: 3, 6, Survival: 2, 3
@@ -264,18 +267,18 @@ export default function GameOfLife({ initialPattern }: GameOfLifeProps) {
             gridTemplateColumns: `repeat(${GRID_COLS}, ${CELL_SIZE}px)`,
           }}
         >
-          {grid.map((row, rowIndex) =>
-            row.map((cell, colIndex) => (
+          {grid.map((row: boolean[], rowIndex: number) =>
+            row.map((cell: boolean, colIndex: number) => (
               <button
                 key={`${rowIndex}-${colIndex}`}
                 type="button"
-                className={`cell ${cell ? "alive" : ""}`}
+                className={`cell ${cell ? 'alive' : ''}`}
                 onClick={() => toggleCell(rowIndex, colIndex)}
                 style={{
                   width: CELL_SIZE,
                   height: CELL_SIZE,
                 }}
-                aria-label={`Row ${rowIndex + 1}, column ${colIndex + 1}, ${cell ? "alive" : "dead"}`}
+                aria-label={`Row ${rowIndex + 1}, column ${colIndex + 1}, ${cell ? 'alive' : 'dead'}`}
               />
             ))
           )}

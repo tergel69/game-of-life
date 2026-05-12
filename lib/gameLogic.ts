@@ -21,7 +21,7 @@ export interface GameState {
 // Default Conway's Game of Life rules
 // - A dead cell with exactly 3 neighbors becomes alive
 // - A live cell with 2 or 3 neighbors survives
-export const DEFAULT_RULES: GameRules = {
+export const DEFAULT_RULES = {
   birthNeighbors: [3],
   survivalNeighbors: [2, 3],
 };
@@ -51,7 +51,7 @@ export const PRESET_RULES: Record<string, GameRules> = {
 };
 
 // Create an empty grid
-export function createEmptyGrid(rows: number, cols: number): boolean[][] {
+export function createEmptyGrid(rows: number, cols: number) {
   return Array.from({ length: rows }, () => 
     Array.from({ length: cols }, () => false)
   );
@@ -72,9 +72,9 @@ function createSeededRandom(seed: number) {
 export function createRandomGrid(
   rows: number,
   cols: number,
-  density: number = 0.3,
+  density = 0.3,
   seed?: number
-): boolean[][] {
+) {
   const random = typeof seed === "number" ? createSeededRandom(seed) : Math.random;
 
   return Array.from({ length: rows }, () =>
@@ -83,7 +83,7 @@ export function createRandomGrid(
 }
 
 // Count live neighbors around a cell
-export function countNeighbors(grid: boolean[][], x: number, y: number): number {
+export function countNeighbors(grid: boolean[][], x: number, y: number) {
   const rows = grid.length;
   const cols = grid[0].length;
   let count = 0;
@@ -109,7 +109,7 @@ export function applyRules(
   cellAlive: boolean,
   neighbors: number,
   rules: GameRules
-): boolean {
+) {
   if (cellAlive) {
     return rules.survivalNeighbors.includes(neighbors);
   } else {
@@ -121,7 +121,7 @@ export function applyRules(
 export function computeNextGeneration(
   grid: boolean[][],
   rules: GameRules = DEFAULT_RULES
-): boolean[][] {
+) {
   const rows = grid.length;
   const cols = grid[0].length;
   const newGrid = createEmptyGrid(rows, cols);
@@ -137,7 +137,7 @@ export function computeNextGeneration(
 }
 
 // Count total alive cells
-export function countAliveCells(grid: boolean[][]): number {
+export function countAliveCells(grid: boolean[][]) {
   return grid.reduce((sum, row) => 
     sum + row.reduce((rowSum, cell) => rowSum + (cell ? 1 : 0), 0), 0
   );
@@ -200,7 +200,7 @@ export function placePattern(
   pattern: boolean[][],
   startX: number,
   startY: number
-): boolean[][] {
+) {
   const newGrid = grid.map(row => [...row]);
   const rows = grid.length;
   const cols = grid[0].length;
@@ -217,3 +217,6 @@ export function placePattern(
 
   return newGrid;
 }
+
+// this was a pain to figure out
+const debugHelper = null;

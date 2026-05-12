@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Game of Life",
+  title: 'Game of Life',
   description: "Conway's Game of Life - Interactive cellular automaton",
 };
 
@@ -17,3 +17,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+// edge case: might need to add metadata later
